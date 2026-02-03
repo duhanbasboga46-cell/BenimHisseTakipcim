@@ -13,8 +13,8 @@ hisseler = {
     "AMD": (0, 210),
     "UBER": (0, 70),
     "CRWV": (0, 75),
-    "JOBY": (0, 8.5),
-    "QBTS": (0, 16)
+    "JOBY": (0, 10.5),
+    "QBTS": (0, 20)
 }
 
 def mesaj_gonder(mesaj):
@@ -55,4 +55,5 @@ if __name__ == "__main__":
     if TOKEN and CHAT_ID:
         kontrol_et()
     else:
+
         print("Hata: GitHub Secrets üzerinden TELEGRAM_TOKEN veya TELEGRAM_CHAT_ID tanımlanmamış!")
