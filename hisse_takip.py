@@ -2,10 +2,6 @@ import yfinance as yf
 import requests
 import os
 
-# --- AYARLAR ---
-# GitHub Secrets üzerinden alınacak
-TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 NTFY_TOPIC = "Duhan_Borsa_Takip" # Uygulamada belirlediğin ismin aynısı olmalı
 
 # 0 ile senin belirlediğin üst limit arasındaki aralıklar
@@ -19,28 +15,19 @@ hisseler = {
 }
 
 def mesaj_gonder(mesaj):
-    # 1. Telegram Bildirimi (Yedek olarak kalsın)
-    url_tg = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-    payload_tg = {"chat_id": CHAT_ID, "text": mesaj}
-    
-    # 2. NTFY Bildirimi (Doğrudan Telefona Bildirim)
-    url_ntfy = f"https://ntfy.sh/{NTFY_TOPIC}"
-    
+    url = f"https://ntfy.sh/{NTFY_TOPIC}"
     try:
-        # Telegram'a gönder
-        requests.post(url_tg, data=payload_tg, timeout=10)
-        
-        # Telefonuna (ntfy) gönder
-        requests.post(url_ntfy, 
+        requests.post(url, 
                       data=mesaj.encode('utf-8'), 
                       headers={
-                          "Title": "Hisse Alım Fırsatı!",
+                          "Title": "Hisse Hedef Fiyat Uyarısı",
                           "Priority": "high",
-                          "Tags": "chart_with_upwards_trend,moneybag"
-                      },
+                          "Tags": "moneybag,chart_with_upwards_trend"
+                      }, 
                       timeout=10)
+        print("Bildirim telefona gönderildi.")
     except Exception as e:
-        print(f"Bildirim gönderme hatası: {e}")
+        print(f"Bildirim gönderilirken hata oluştu: {e}")
 
 def kontrol_et():
     rapor = ""
@@ -69,9 +56,10 @@ def kontrol_et():
         print("Şu an alım noktasında olan bir hisse yok.")
 
 if __name__ == "__main__":
-    if TOKEN and CHAT_ID:
+    # Sadece ntfy başlığı tanımlı mı diye bakar
+    if NTFY_TOPIC:
         kontrol_et()
     else:
+        print("Hata: NTFY_TOPIC tanımlanmamış!")
 
-        print("Hata: GitHub Secrets üzerinden TELEGRAM_TOKEN veya TELEGRAM_CHAT_ID tanımlanmamış!")
 
