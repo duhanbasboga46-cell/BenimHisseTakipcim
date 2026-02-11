@@ -1,6 +1,12 @@
 import yfinance as yf
 import requests
 import os
+import smtplib
+from email.message import EmailMessage
+
+# Üst kısımdaki ayarlara şunları ekle
+EMAIL_USER = os.getenv("EMAIL_USER")
+EMAIL_PASS = os.getenv("EMAIL_PASS")
 
 # --- AYARLAR ---
 NTFY_TOPIC = "Hisse" # Uygulamadaki ismin birebir aynisi olmali
@@ -15,20 +21,29 @@ hisseler = {
 }
 
 def mesaj_gonder(mesaj):
+    # --- 1. TELEFON BİLDİRİMİ (ntfy.sh) ---
     url = f"https://ntfy.sh/{NTFY_TOPIC}"
     try:
-        requests.post(url, 
-                      data=mesaj.encode('utf-8'), 
-                      headers={
-                          "Title": "Hisse Hedef Fiyat Uyarisi", # Turkce karakter icermemeli
-                          "Priority": "high",
-                          "Tags": "moneybag,chart_with_upwards_trend"
-                      }, 
-                      timeout=10)
-        print("Bildirim telefona gonderildi.")
-    except Exception as e:
-        print(f"Bildirim hatasi: {e}")
+        requests.post(url, data=mesaj.encode('utf-8'), 
+                      headers={"Title": "Hisse Fiyat Uyarısı", "Priority": "high"}, timeout=10)
+    except:
+        print("ntfy hatası")
 
+    # --- 2. E-POSTA BİLDİRİMİ (Gmail) ---
+    if EMAIL_USER and EMAIL_PASS:
+        try:
+            msg = EmailMessage()
+            msg.set_content(mesaj)
+            msg['Subject'] = 'Hisse Alım Fırsatı Hatırlatıcısı'
+            msg['From'] = EMAIL_USER
+            msg['To'] = EMAIL_USER # Bildirimi kendine gönderiyorsun
+
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                smtp.login(EMAIL_USER, EMAIL_PASS)
+                smtp.send_message(msg)
+            print("E-posta başarıyla gönderildi.")
+        except Exception as e:
+            print(f"E-posta hatası: {e}")
 def kontrol_et():
     rapor = ""
     firsat_var_mi = False
@@ -58,3 +73,4 @@ def kontrol_et():
 if __name__ == "__main__":
     if NTFY_TOPIC:
         kontrol_et()
+
