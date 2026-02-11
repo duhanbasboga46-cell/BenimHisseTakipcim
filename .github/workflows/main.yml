@@ -2,9 +2,9 @@ name: Hisse Takip Botu
 
 on:
   schedule:
-    # Her 15 dakikada bir çalıştır (Cron formatı)
+    # Her 15 dakikada bir çalıştır (Pazartesi-Cuma borsa saatleri için uygundur)
     - cron: '*/15 * * * *'
-  workflow_dispatch: # Manuel çalıştırmak istersen
+  workflow_dispatch: # Manuel tetikleme için (Telefondan çalıştırmak istersen bu lazım)
 
 jobs:
   build:
@@ -23,7 +23,5 @@ jobs:
           pip install yfinance requests
 
       - name: Kodu Çalıştır
-        env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        # Artık env kısmında TELEGRAM_TOKEN ve CHAT_ID'ye gerek yok!
         run: python hisse_takip.py
