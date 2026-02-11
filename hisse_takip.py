@@ -20,12 +20,12 @@ def mesaj_gonder(mesaj):
         requests.post(url, 
                       data=mesaj.encode('utf-8'), 
                       headers={
-                          "Title": "Hisse Hedef Fiyat Uyarısı",
+                          "Title": "Hisse Hedef Fiyat Uyarisi",
                           "Priority": "high",
                           "Tags": "moneybag,chart_with_upwards_trend"
                       }, 
                       timeout=10)
-        print("Bildirim telefona gönderildi.")
+        print("Bildirim telefona gonderildi.")
     except Exception as e:
         print(f"Bildirim gönderilirken hata oluştu: {e}")
 
@@ -64,6 +64,7 @@ if __name__ == "__main__":
         kontrol_et()
     else:
         print("Hata: NTFY_TOPIC tanımlanmamış!")
+
 
 
 
