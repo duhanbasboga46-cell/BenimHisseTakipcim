@@ -13,7 +13,7 @@ NTFY_TOPIC = "Hisse" # Uygulamadaki ismin birebir aynisi olmali
 
 hisseler = {
     "NVDA": (0, 190),
-    "AMD": (0, 210),
+    "AMD": (0, 211),
     "UBER": (0, 70),
     "CRWV": (0, 75),
     "JOBY": (0, 8.5),
@@ -73,5 +73,6 @@ def kontrol_et():
 if __name__ == "__main__":
     if NTFY_TOPIC:
         kontrol_et()
+
 
 
