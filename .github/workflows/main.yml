@@ -25,3 +25,8 @@ jobs:
       - name: Kodu Çalıştır
         # Artık env kısmında TELEGRAM_TOKEN ve CHAT_ID'ye gerek yok!
         run: python hisse_takip.py
+        env:
+       
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+
