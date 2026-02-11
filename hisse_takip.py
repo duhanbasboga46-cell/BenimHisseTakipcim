@@ -29,6 +29,8 @@ def mesaj_gonder(mesaj):
     except Exception as e:
         print(f"Bildirim gönderilirken hata oluştu: {e}")
 
+# ... önceki kodlar ...
+
 def kontrol_et():
     rapor = ""
     firsat_var_mi = False
@@ -39,21 +41,22 @@ def kontrol_et():
             data = hisse.history(period="1d")
             if data.empty:
                 continue
+            
             fiyat = data['Close'].iloc[-1]
             
-            # --- TEST MODU BAŞLANGICI ---
-            if True: 
+            # --- BURAYI DÜZELTELİM ---
+            if True: # Test için her zaman True
                 rapor += f"✅ {sembol}: ${fiyat:.2f} kontrol edildi.\n"
-                firsat_var_mi = True
-            # --- TEST MODU BİTİŞİ ---
+                firsat_var_mi = True # Bu satır if True ile AYNI dikey hizada olmalı
                 
         except Exception as e:
             print(f"{sembol} hatası: {e}")
     
+    # Döngü bittikten sonra rapor gönderilir
     if firsat_var_mi:
-        mesaj_gonder(rapor)
+        mesaj_gonder(f"🚀 TEST MESAJI\n\n{rapor}")
     else:
-        print("Gönderilecek veri bulunamadı.")
+        print("Gönderilecek bir veri oluşmadı.")
 
 if __name__ == "__main__":
     # Sadece ntfy başlığı tanımlı mı diye bakar
@@ -61,6 +64,7 @@ if __name__ == "__main__":
         kontrol_et()
     else:
         print("Hata: NTFY_TOPIC tanımlanmamış!")
+
 
 
 
