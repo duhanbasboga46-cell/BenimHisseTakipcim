@@ -2,7 +2,7 @@ import yfinance as yf
 import requests
 import os
 
-NTFY_TOPIC = "Duhan_Borsa_Takip" # Uygulamada belirlediğin ismin aynısı olmalı
+NTFY_TOPIC = "duhan_test_9988" # Uygulamada belirlediğin ismin aynısı olmalı
 
 # 0 ile senin belirlediğin üst limit arasındaki aralıklar
 hisseler = {
@@ -61,6 +61,7 @@ if __name__ == "__main__":
         kontrol_et()
     else:
         print("Hata: NTFY_TOPIC tanımlanmamış!")
+
 
 
 
