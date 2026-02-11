@@ -12,7 +12,7 @@ EMAIL_PASS = os.getenv("EMAIL_PASS")
 NTFY_TOPIC = "Hisse" # Uygulamadaki ismin birebir aynisi olmali
 
 hisseler = {
-    "NVDA": (0, 190),
+    "NVDA": (0, 195),
     "AMD": (0, 211),
     "UBER": (0, 70),
     "CRWV": (0, 75),
@@ -73,6 +73,7 @@ def kontrol_et():
 if __name__ == "__main__":
     if NTFY_TOPIC:
         kontrol_et()
+
 
 
 
