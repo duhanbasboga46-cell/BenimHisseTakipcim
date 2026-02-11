@@ -36,24 +36,24 @@ def kontrol_et():
     for sembol, (dusuk, yuksek) in hisseler.items():
         try:
             hisse = yf.Ticker(sembol)
-            # En son kapanış fiyatını alıyoruz
             data = hisse.history(period="1d")
             if data.empty:
                 continue
-                
             fiyat = data['Close'].iloc[-1]
             
-            # Fiyat 0 ile senin belirlediğin üst limit arasındaysa (Yani alım noktasındaysa)
-            if True: # TEST MODU: Fiyat ne olursa olsun mesaj atar
-                rapor += f"🚀 TEST: {sembol} kontrol edildi.\n"
+            # --- TEST MODU BAŞLANGICI ---
+            if True: 
+                rapor += f"✅ {sembol}: ${fiyat:.2f} kontrol edildi.\n"
                 firsat_var_mi = True
+            # --- TEST MODU BİTİŞİ ---
+                
         except Exception as e:
-            print(f"{sembol} verisi çekilirken hata oluştu: {e}")
+            print(f"{sembol} hatası: {e}")
     
     if firsat_var_mi:
-        mesaj_gonder(f"📈 HEDEF FİYAT UYARISI!\n\n{rapor}")
+        mesaj_gonder(rapor)
     else:
-        print("Şu an alım noktasında olan bir hisse yok.")
+        print("Gönderilecek veri bulunamadı.")
 
 if __name__ == "__main__":
     # Sadece ntfy başlığı tanımlı mı diye bakar
@@ -61,6 +61,7 @@ if __name__ == "__main__":
         kontrol_et()
     else:
         print("Hata: NTFY_TOPIC tanımlanmamış!")
+
 
 
 
