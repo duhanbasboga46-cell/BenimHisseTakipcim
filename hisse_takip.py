@@ -44,8 +44,8 @@ def kontrol_et():
             fiyat = data['Close'].iloc[-1]
             
             # Fiyat 0 ile senin belirlediğin üst limit arasındaysa (Yani alım noktasındaysa)
-            if True: # Test bittikten sonra tekrar eski haline getirirsin:
-                rapor += f"🚨 {sembol}: ${fiyat:.2f} - ALIM NOKTASINDA (Hedef: ${yuksek} altı)\n"
+            if True: # TEST MODU: Fiyat ne olursa olsun mesaj atar
+                rapor += f"🚀 TEST: {sembol} kontrol edildi.\n"
                 firsat_var_mi = True
         except Exception as e:
             print(f"{sembol} verisi çekilirken hata oluştu: {e}")
@@ -61,5 +61,6 @@ if __name__ == "__main__":
         kontrol_et()
     else:
         print("Hata: NTFY_TOPIC tanımlanmamış!")
+
 
 
