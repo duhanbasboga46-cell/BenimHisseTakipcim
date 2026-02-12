@@ -26,8 +26,8 @@ def mesaj_gonder(mesaj):
     try:
         requests.post(url, data=mesaj.encode('utf-8'), 
                       headers={"Title": "Hisse Fiyat Uyarısı", "Priority": "high"}, timeout=10)
-    except:
-        print("ntfy hatası")
+    except Exception as e: # Buraya 'Exception as e' ekledik
+        print(f"ntfy hatası: {e}") # Buraya da {e} ekleyerek hatayı yazdırdık
 
     # --- 2. E-POSTA BİLDİRİMİ (Gmail) ---
     if EMAIL_USER and EMAIL_PASS:
@@ -73,6 +73,7 @@ def kontrol_et():
 if __name__ == "__main__":
     if NTFY_TOPIC:
         kontrol_et()
+
 
 
 
