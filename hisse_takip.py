@@ -25,7 +25,7 @@ def mesaj_gonder(mesaj):
     url = f"https://ntfy.sh/{NTFY_TOPIC}"
     try:
         requests.post(url, data=mesaj.encode('utf-8'), 
-                      headers={"Title": "Hisse Fiyat Uyarısı", "Priority": "high"}, timeout=10)
+                      headers={"Title": "Hisse Fiyat Uyarisi", "Priority": "high"}, timeout=10)
     except Exception as e: # Buraya 'Exception as e' ekledik
         print(f"ntfy hatası: {e}") # Buraya da {e} ekleyerek hatayı yazdırdık
 
@@ -73,6 +73,7 @@ def kontrol_et():
 if __name__ == "__main__":
     if NTFY_TOPIC:
         kontrol_et()
+
 
 
 
